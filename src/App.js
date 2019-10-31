@@ -1,15 +1,26 @@
 import "babel-polyfill";
-import React from "react";
+import React, { useState } from "react";
 import { render } from "react-dom";
+import { Router, Link } from "@reach/router";
 import SearchParams from "./SearchParams";
+import Details from "./Details";
+import ThemeContext from "./ThemeContext";
 
 const App = () => {
+  const themeHook = useState("darkblue");
   return (
     <React.StrictMode>
-      <div>
-        <h1>Adopt me!</h1>
-        <SearchParams></SearchParams>
-      </div>
+      <ThemeContext.Provider value={themeHook}>
+        <div>
+          <header>
+            <Link to="/">Adopt me!</Link>
+          </header>
+          <Router>
+            <SearchParams path="/"></SearchParams>
+            <Details path="/details/:id"></Details>
+          </Router>
+        </div>
+      </ThemeContext.Provider>
     </React.StrictMode>
   );
 };
