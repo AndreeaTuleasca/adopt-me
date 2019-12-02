@@ -60,8 +60,8 @@ const SearchParams = () => {
           </select>
         </label>
         <button style={{ backgroundColor: theme }}>Submit</button>
-        <Results pets={pets} />
       </form>
+      <Results pets={pets} />
     </div>
   );
 };
