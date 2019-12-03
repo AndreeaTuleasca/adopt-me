@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "parcel build --public-url ./dist/ src/index.html",
     "dev": "parcel src/index.html",
     "dev:mock": "cross-env PET_MOCK=mock npm run dev parcel src/index.html",
     "format": "prettier \"src/**/*.{js,html}\" --write",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
+    "start": "npm run build && babel-node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,11 +17,11 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.7.4",
+    "@babel/cli": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
-    "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
-    "babel-polyfill": "^6.26.0",
+    "@babel/polyfill": "^7.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "cross-env": "^6.0.3",
@@ -33,10 +35,12 @@
     "prettier": "^1.19.1"
   },
   "dependencies": {
+    "@babel/node": "^7.7.4",
     "@emotion/babel-preset-css-prop": "^10.0.23",
     "@emotion/core": "^10.0.22",
     "@frontendmasters/pet": "^1.0.3",
     "@reach/router": "^1.2.1",
+    "express": "^4.17.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
   },
