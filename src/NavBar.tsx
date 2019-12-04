@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, FunctionComponent } from "react";
 import { Link } from "@reach/router";
 import { css, keyframes } from "@emotion/core";
-import colors from "./colors";
+import Colors from "./colors";
 
 const spin = keyframes`
 to {
     transform: rotate(360deg);
 }`;
-const NavBar = () => {
+const NavBar: FunctionComponent = () => {
   const [padding, setPadding] = useState(15);
   return (
     <header
       css={css`
-        background-color: ${colors.primary};
+        background-color: ${Colors.primary};
         padding: ${padding}px;
       `}
     >

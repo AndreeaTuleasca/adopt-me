@@ -1,18 +1,22 @@
 import React from "react";
+import { Photo } from "@frontendmasters/pet";
 
-class Carousel extends React.Component {
-  constructor(props) {
-    super(props);
+interface Props {
+  media: Photo[];
+}
 
-    this.state = {
-      photos: [],
-      active: 0
-    };
+interface State {
+  photos: string[];
+  active: number;
+}
 
-    this.handleIndexClick = this.handleIndexClick.bind(this);
-  }
+class Carousel extends React.Component<Props, State> {
+  public state: State = {
+    photos: [],
+    active: 0
+  };
 
-  static getDerivedStateFromProps({ media }) {
+  public static getDerivedStateFromProps({ media }: Props) {
     let photos = ["http://placecorgi.com/600/600"];
     if (media.length) {
       photos = media.map(({ large }) => large);
@@ -21,20 +25,24 @@ class Carousel extends React.Component {
     return { photos };
   }
 
-  handleIndexClick(event) {
-    this.setState({
-      active: +event.target.dataset.index
-    });
+  public handleIndexClick(event: React.MouseEvent<HTMLElement>) {
+    if (!(event.target instanceof HTMLElement)) {
+      return;
+    }
+    if (event.target.dataset.index) {
+      this.setState({
+        active: +event.target.dataset.index
+      });
+    }
   }
 
-  render() {
+  public render() {
     const { photos, active } = this.state;
     return (
       <div className="carousel">
         <img src={photos[active]} alt="animal" />
         <div className="carousel-smaller">
           {photos.map((photo, index) => (
-            //eslint-disable-next-line
             <img
               key={photo}
               onClick={this.handleIndexClick}

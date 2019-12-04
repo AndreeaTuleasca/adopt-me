@@ -1,30 +1,32 @@
-import React, { Component } from "react";
+import React, { Component, ErrorInfo } from "react";
 import { Link, Redirect } from "@reach/router";
 
+interface State {
+  hasError: boolean;
+  redirect: boolean;
+}
+
 class ErrorBoudary extends Component {
-  constructor(props) {
-    super(props);
+  public state: State = {
+    hasError: false,
+    redirect: false
+  };
 
-    this.state = {
-      hasError: false
-    };
-  }
-
-  static getDerivedStateFromError() {
+  public static getDerivedStateFromError() {
     return { hasError: true };
   }
 
-  componentDidCatch(error, info) {
+  public componentDidCatch(error: Error, info: ErrorInfo) {
     console.error("Error boundary caught an error", error, info);
   }
 
-  componentDidUpdate() {
+  public componentDidUpdate() {
     if (this.state.hasError) {
       setTimeout(() => this.setState({ redirect: true }), 5000);
     }
   }
 
-  render() {
+  public render() {
     if (this.state.redirect) {
       return <Redirect to="/" />;
     }
