@@ -1,9 +1,9 @@
 import React, { lazy } from "react";
 import { navigate, RouteComponentProps } from "@reach/router";
+import { connect } from "react-redux";
 import pet, { Photo } from "@frontendmasters/pet";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
-import ThemeContext from "./ThemeContext";
 
 const Modal = lazy(() => import("./Modal"));
 
@@ -13,21 +13,23 @@ interface State {
   name: string;
   animal: string;
   breed: string;
-  location: string;
   description: string;
+  dogLocation: string;
   media: Photo[];
   url: string;
 }
 
-class Details extends React.Component<RouteComponentProps<{ id: string }>> {
+class Details extends React.Component<
+  RouteComponentProps<{ id: string; theme: string }>
+> {
   state: State = {
     loading: true,
     showModal: false,
     name: "",
     animal: "",
     breed: "",
-    location: "",
     description: "",
+    dogLocation: "",
     media: [],
     url: ""
   };
@@ -43,7 +45,7 @@ class Details extends React.Component<RouteComponentProps<{ id: string }>> {
       this.setState({
         name: animal.name,
         animal: animal.type,
-        location: `${animal.contact.address.city}, ${animal.contact.address.state}`,
+        dogLocation: `${animal.contact.address.city}, ${animal.contact.address.state}`,
         description: animal.description,
         media: animal.photos,
         breed: animal.breeds.primary,
@@ -69,27 +71,23 @@ class Details extends React.Component<RouteComponentProps<{ id: string }>> {
       name,
       animal,
       breed,
-      location,
       description,
       media,
-      showModal
+      showModal,
+      dogLocation
     } = this.state;
     return (
       <div className="details">
         <Carousel media={media} />
         <div>
           <h1>{name}</h1>
-          <h2>{`${animal} - ${breed} - ${location}`}</h2>
-          <ThemeContext.Consumer>
-            {([theme]) => (
-              <button
-                onClick={this.toggleModal}
-                style={{ backgroundColor: theme }}
-              >
-                Adopt {name}
-              </button>
-            )}
-          </ThemeContext.Consumer>
+          <h2>{`${animal} - ${breed} - ${dogLocation}`}</h2>
+          <button
+            onClick={this.toggleModal}
+            style={{ backgroundColor: this.props.theme }}
+          >
+            Adopt {name}
+          </button>
           <p>{description}</p>
           {showModal ? (
             <Modal>
@@ -108,12 +106,18 @@ class Details extends React.Component<RouteComponentProps<{ id: string }>> {
   }
 }
 
+const mapStateToProps = ({ theme }: { theme: string }) => ({
+  theme
+});
+
+const WrappedDetails = connect(mapStateToProps)(Details);
+
 export default function DetailsWithErrorBoundary(
-  props: RouteComponentProps<{ id: string }>
+  props: RouteComponentProps<{ id: string; theme: any; dogLocation: any }>
 ) {
   return (
     <ErrorBoundary>
-      <Details {...props} />
+      <WrappedDetails {...props} />
     </ErrorBoundary>
   );
 }
