@@ -1,12 +1,17 @@
 {
-    "presets": [
-        "@babel/preset-react",
-        "@babel/preset-env",
-        [
-            "@emotion/babel-preset-css-prop",
-            {
-                "sourceMap": false
-            }
-        ]
+  "env": {
+    "test": {
+      "plugins": ["@babel/plugin-transform-runtime"]
+    }
+  },
+  "presets": [
+    "@babel/preset-react",
+    "@babel/preset-env",
+    [
+      "@emotion/babel-preset-css-prop",
+      {
+        "sourceMap": false
+      }
     ]
+  ]
 }

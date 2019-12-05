@@ -34,13 +34,16 @@ const SearchParams: FunctionComponent<RouteComponentProps<{
     }, console.error);
   }, [animal, setBreeds, setBreed]);
 
-  async function requestPets() {
-    const { animals } = await pet.animals({
-      location: props.location,
-      breed,
-      type: animal
-    });
-    setPets(animals || []);
+  function requestPets() {
+    pet
+      .animals({
+        location: props.location,
+        breed,
+        type: animal
+      })
+      .then(({ animals }) => {
+        setPets(animals || []);
+      });
   }
 
   return (

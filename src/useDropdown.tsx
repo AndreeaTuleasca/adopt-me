@@ -16,6 +16,7 @@ const useDropdown = (
   const Dropdown: FunctionComponent = () => (
     <label htmlFor={id}>
       <select
+        data-testid={id}
         id={id}
         value={state}
         onChange={e => setState(e.target.value)}

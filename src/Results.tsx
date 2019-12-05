@@ -8,7 +8,7 @@ interface Props {
 
 const Results: FunctionComponent<Props> = ({ pets }) => {
   return (
-    <div className="search">
+    <div data-testid="search-results" className="search">
       {pets.length === 0 ? (
         <h1>No pets found!</h1>
       ) : (
